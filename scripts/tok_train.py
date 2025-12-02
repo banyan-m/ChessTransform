@@ -61,3 +61,5 @@ decoded= tokenizer.decode(encode)
 
 vocab_size = tokenizer.get_vocab_size()
 special_set = set(tokenizer.get_special_tokens())
+token_strings = [tokenizer.decode([token_id]) for token_id in range(vocab_size)]
+token_bytes = []
