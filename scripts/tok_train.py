@@ -33,7 +33,6 @@ tokenizer = RustBPETokenizer.train_from_iterator(text_iter, vocab_size=args.voca
 t1 = time.time()
 train_time = t1 - t0
 print(f"Tokenizer trained in {train_time} seconds")
-
 print(f"Vocab size: {len(tokenizer.get_vocab())}")
 print(f"Vocab: {tokenizer.get_vocab()}")
 
@@ -41,4 +40,18 @@ base_dir = get_base_dir()
 tokenizer_dir = os.path.join(base_dir, "tokenizer")
 tokenizer.save(tokenizer_dir)
 
+#inline sanity check of different cases
+test_text = """Hello world, this is a test.
+Numbers: 1234567890
+Contractions: don't, can't, won't, etc.
+Punctuation: !, ?, ., etc.
+Special characters: @, #, $, %, etc.
+Unicode: 𝑎, 𝑏, 𝑐, etc.
+"""
+encode = tokenizer.encode(test_text)
+decoded= tokenizer.decode(encode)
 
+
+
+
+#save the tokenizer
