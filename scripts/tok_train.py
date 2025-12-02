@@ -1,3 +1,6 @@
+from typing import Any
+
+
 import os 
 import time
 import argparse
@@ -54,4 +57,7 @@ decoded= tokenizer.decode(encode)
 
 
 
-#save the tokenizer
+#We need to cache a mapping from token id to that token's size in bytes, this will help us determine bits per byte.
+
+vocab_size = tokenizer.get_vocab_size()
+special_set = set(tokenizer.get_special_tokens())
