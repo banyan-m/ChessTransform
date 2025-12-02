@@ -18,6 +18,8 @@ parser.add_argument("--vocab_size", type=int, default=65536, help="Vocab size (d
 f"Max chars: {args.max_chars}, Doc cap: {args.doc_cap}, Vocab size: {args.vocab_size}"
 print(f"Max chars: {args.max_chars}, Doc cap: {args.doc_cap}, Vocab size: {args.vocab_size}")
 
+
+
 def text_iterator():
     nchars = 0
     for batch in parquetchess_iter_batched(split="train"):
@@ -30,6 +32,7 @@ def text_iterator():
             if nchars >= args.max_chars:
                 return
 text_iter = text_iterator()
+
 
 t0 = time.time()
 tokenizer = RustBPETokenizer.train_from_iterator(text_iter, vocab_size=args.vocab_size)
