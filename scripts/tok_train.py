@@ -63,3 +63,21 @@ vocab_size = tokenizer.get_vocab_size()
 special_set = set(tokenizer.get_special_tokens())
 token_strings = [tokenizer.decode([token_id]) for token_id in range(vocab_size)]
 token_bytes = []
+
+for token_id in range(vocab_size):
+    token_string = token_strings[token_id]
+    if token_string in special_set:
+        token_bytes.append(0)
+
+    else:
+        id_bytes = len(token_string.encode("utf-8"))
+        token_bytes.append(id_bytes)
+
+token_bytes = torch.tensor(token_bytes, dtype=torch.int32, device="cpu")
+token_bytes_path = os.path.join(tokenizer_dir, "token_bytes.pt")
+
+with open(token_bytes_path, "wb") as f:
+    torch.save(token_bytes, f)
+print(f"Token bytes saved to {token_bytes_path}")
+
+
