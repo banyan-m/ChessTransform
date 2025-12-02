@@ -26,7 +26,7 @@ def text_iterator():
             yield doc_text
             if nchars >= args.max_chars:
                 return
-text_iterator = text_iterator()
+text_iter = text_iterator()
 
 
 
