@@ -86,7 +86,7 @@ from ChessTransform.report import get_report
 token_bytes_nonzero = (token_bytes[token_bytes > 0]).to(dtype=torch.float32)
 get_report().log(section="tokenizer_trainin", data=[
     vars(args),
-    {train_time: f"{train_time:.2f}s"},
+    {"train_time": train_time},
     {num_special_tokens: len(special_set)},
     {
         token_bytes_min: int(token_bytes_nonzero.min().item()),
