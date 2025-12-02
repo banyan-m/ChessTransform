@@ -28,5 +28,16 @@ def text_iterator():
                 return
 text_iter = text_iterator()
 
+t0 = time.time()
+tokenizer = RustBPETokenizer.train_from_iterator(text_iter, vocab_size=args.vocab_size)
+t1 = time.time()
+train_time = t1 - t0
+print(f"Tokenizer trained in {train_time} seconds")
+
+print(f"Vocab size: {len(tokenizer.get_vocab())}")
+print(f"Vocab: {tokenizer.get_vocab()}")
+
+base_dir = get_base_dir()
+
 
 
