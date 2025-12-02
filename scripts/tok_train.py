@@ -38,6 +38,7 @@ print(f"Vocab size: {len(tokenizer.get_vocab())}")
 print(f"Vocab: {tokenizer.get_vocab()}")
 
 base_dir = get_base_dir()
-
+tokenizer_dir = os.path.join(base_dir, "tokenizer")
+tokenizer.save(tokenizer_dir)
 
 
