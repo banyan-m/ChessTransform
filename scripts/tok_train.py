@@ -80,4 +80,19 @@ with open(token_bytes_path, "wb") as f:
     torch.save(token_bytes, f)
 print(f"Token bytes saved to {token_bytes_path}")
 
+#log to report
+from ChessTransform.report import get_report
 
+token_bytes_nonzero = (token_bytes[token_bytes > 0]).to(dtype=torch.float32)
+get_report().log(section="tokenizer_trainin", data=[
+    vars(args),
+    {train_time: f"{train_time:.2f}s"},
+    {num_special_tokens: len(special_set)},
+    {
+        token_bytes_min: int(token_bytes_nonzero.min().item()),
+        token_bytes_max: int(token_bytes_nonzero.max().item()),
+        token_bytes_mean: token_bytes_nonzero.mean().item(),
+        token_bytes_std: token_bytes_nonzero.std().item(),
+        
+    },
+])
