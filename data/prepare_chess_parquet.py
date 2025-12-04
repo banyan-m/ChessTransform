@@ -38,3 +38,27 @@ def iter_all_games(in_dir):
             yield game_lines
 
 
+def parse_game(game_lines):
+    headers = [l for l in game_lines if l.startswith("[")]
+    result = None
+    for h in headers:
+        if h.startswith("[Result"):
+            parts = h.split('"')
+            if len(parts) >= 2:
+                result = parts[1]
+                break
+    if result not in ["1-0", "0-1", "1/2-1/2"]:
+        return None
+
+    moves_lines = [
+        l for l in game_lines
+        if not l.startswith("[") and l.strip()
+    ]
+
+    if not moves_lines:
+        return None
+
+    moves_str = " ".join(" ".join(moves_lines).split())
+
+    text = f"[RESULT: {result}] {moves_str}"
+    return text, result
