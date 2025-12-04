@@ -18,3 +18,14 @@ def iter_pgn_games(path):
                 yield game_lines
                 game_lines = []
             
+            else:
+                if line.strip() == "" and not game_lines:
+                    continue
+                game_lines.append(line)
+
+        if game_lines:
+            yield game_lines
+
+
+
+            
