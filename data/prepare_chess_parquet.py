@@ -62,3 +62,9 @@ def parse_game(game_lines):
 
     text = f"[RESULT: {result}] {moves_str}"
     return text, result
+
+def process_pgn_dir(in_dir, out_dir, max_games_per_shard=1000000):
+
+    os.makedirs(out_dir, exist_ok=True)
+    shard_idx = 0
+    texts, results = [], []
