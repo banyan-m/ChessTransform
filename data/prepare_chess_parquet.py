@@ -27,5 +27,14 @@ def iter_pgn_games(path):
             yield game_lines
 
 
+def iter_all_games(in_dir):
 
-            
+    for filename in sorted(os.listdir(in_dir)):
+        if not filename.endswith(".pgn"):
+            continue
+        path = os.path.join(in_dir, filename)
+
+        for game_lines in iter_pgn_games(path):
+            yield game_lines
+
+
