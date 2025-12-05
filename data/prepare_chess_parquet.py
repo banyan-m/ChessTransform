@@ -68,3 +68,37 @@ def process_pgn_dir(in_dir, out_dir, max_games_per_shard=1000000):
     os.makedirs(out_dir, exist_ok=True)
     shard_idx = 0
     texts, results = [], []
+
+    def flush_shard():
+        nonlocal shard_idx, texts, results
+        if not texts:
+            return
+        table = pa.Table.from_pydict({"text": texts, "result": results})
+        out_path = os.path.join(out_dir, f"shard_{shard_idx:05d}.parquet")
+        pq.write_table(table, out_path)
+        print(f"--> wrote {len(texts)} games to {out_path}")
+        shard_idx += 1
+        texts, results = [], []
+
+    total_games = 0
+    for game_lines in iter_all_games(in_dir):
+        parsed = parse_game(game_lines)
+        
+        if parsed is None:
+            continue
+        text, result = parsed
+        texts.append(text)
+        results.append(result)
+        total_games += 1
+
+        if len(texts) >= max_games_per_shard:
+            flush_shard()
+
+    
+    flush_shard()
+    print(f"--> processed {total_games} games in total")
+    print(f"--> wrote {shard_idx} shards to {out_dir}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        
