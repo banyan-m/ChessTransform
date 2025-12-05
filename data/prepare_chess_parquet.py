@@ -100,5 +100,11 @@ def process_pgn_dir(in_dir, out_dir, max_games_per_shard=1000000):
     print(f"--> wrote {shard_idx} shards to {out_dir}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--in_dir", type=str, required=True, help="Input directory containing PGN files")
+    parser.add_argument("--out_dir", type=str, required=True, help="Output directory for Parquet files")
+    parser.add_argument("--max_games_per_shard", type=int, default=1000000, help="Maximum number of games per shard (default 1M)")
+
+    args = parser.parse_args()
+
+    process_pgn_dir(args.in_dir, args.out_dir, args.max_games_per_shard)
