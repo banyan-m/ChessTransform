@@ -26,6 +26,13 @@ def parquets_iter_batched(split, start=0, step=1, with_results=False):
         for rg_idx in range(start, pf.num_row_groups, step):
             rg = pf.read_row_group(rg_idx)
 
+            texts = rg.column("text").to_pylist()
+            if with_results:
+                results = rg.column("result").to_pylist()
+                yield texts, results
+            else:
+                yield texts
+                
     
 
 
