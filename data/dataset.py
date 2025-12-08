@@ -21,6 +21,11 @@ def parquets_iter_batched(split, start=0, step=1, with_results=False):
     parquet_paths = list_parquet_files()
     parquet_paths = parquet_paths[:-1] if split == "train" else parquet_paths[-1:]
 
+    for file_path in parquet_paths:
+        pf = pq.ParquetFile(file_path)
+        for rg_idx in range(start, pf.num_row_groups, step):
+            rg = pf.read_row_group(rg_idx)
+
     
 
 
