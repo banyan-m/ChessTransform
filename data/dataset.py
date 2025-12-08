@@ -19,6 +19,7 @@ def parquets_iter_batched(split, start=0, step=1, with_results=False):
     
     assert split in ["train", "val"], "split must be either train or val"
     parquet_paths = list_parquet_files()
+    parquet_paths = parquet_paths[:-1] if split == "train" else parquet_paths[-1:]
 
     
 
