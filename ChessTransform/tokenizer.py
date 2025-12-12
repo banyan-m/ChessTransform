@@ -18,3 +18,20 @@ class BPETokenizer:
         assert vocab_size >= 256 
 
         tokenizer = cls()
+
+        num_merges = vocab_size - 256
+
+        if num_merges == 0:
+            return tokenizer
+
+            print ("reading corpus...")
+            all_ids = []
+            doc_count = 0
+            for text in iterator:
+                text_bytes = text.encode("utf-8")
+                all_ids.extend(list(text_bytes))
+                doc_count += 1
+
+                
+
+        
