@@ -103,6 +103,16 @@ class BPETokenizer:
                 new_id = 256 + merge_idx
                 new_ids = []
                 j = 0
+                while j < len(ids):
+                    if j < len(ids) - 1 and ids[j] == pair[0] and ids[j + 1] == pair[1]:
+                        new_ids.append(new_id)
+                        j += 2
+                    else:
+                        new_ids.append(ids[j])
+                        j += 1
+                ids = new_ids
+            all_ids.extend(ids)
+        return all_ids  
 
             
 
