@@ -78,7 +78,39 @@ class BPETokenizer:
                 j = 0
                 while j < len(chunk):
                     if j < len(chunk) - 1 and chunk[j] == best_pair[0] and chunk[j + 1] == best_pair[1]:
+                        new_chunk.append(new_id)
+                        j += 2
+                    else:
+                        new_chunk.append(chunk[j])
+                    j += 1
+                all_chunks[idx] = new_chunk
+            if (i + 1) % 100 == 0:
+                total_tokens = sum(len(c) for c in all_chunks)
+                print(f"  merge {i + 1}/{num_merges}: {best_pair} → {new_id} (count: {best_count})")
 
+        print(f"Done! Vocabulary size: {len(tokenizer.vocab)}")
+        return tokenizer
+
+    def encode(self, text):
+
+        all_ids = []
+
+        chunks = self._pretokenize(text)
+        for chunk in chunks:
+
+            ids = list(chunk.encode("utf-8"))
+
+            for merge_idx, pair in enumerate(self.merges):
+                new_id = 256 + merge_idx
+                new_ids = []
+                j = 0
+
+            
+
+
+            
+            
+    
             
             
 
