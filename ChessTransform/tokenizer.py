@@ -53,9 +53,19 @@ class BPETokenizer:
         print(f"--> found {len(all_ids)} total bytes")
         print(f"Learning(num_merges={num_merges})...")
 
+        #train the tokenizer by learning merges, most frequent pairs are merged first
         for _ in range(num_merges):
 
             pair_counts = {}
+            for chunk in all_chunks:
+                for j in range(len(chunk) - 1):
+                    pair = (chunk[j], chunk[j + 1])
+                    pair_counts[pair] = pair_counts.get(pair, 0) + 1
+                    
+
+            
+
+            #merge the most frequent pair
 
 
 
