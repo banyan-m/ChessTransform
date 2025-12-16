@@ -31,26 +31,25 @@ class BPETokenizer:
         if num_merges == 0:
             return tokenizer
 
-            print ("reading corpus...")
-            all_chunks = []
-            doc_count = 0
-            total_bytes = 0
-           
-            for text in iterator:
-                chunks = tokenizer._pretokenize(text)
+        print("Reading corpus...")
+        all_chunks = []
+        doc_count = 0
+        total_bytes = 0
+       
+        for text in iterator:
+            chunks = tokenizer._pretokenize(text)
 
-                for chunk in chunks:
-                    chunk_bytes = list(chunk.encode("utf-8"))
-                    if chunk_bytes:
-                        all_chunks.append(chunk_bytes)
-                        total_bytes += len(chunk_bytes)
-                doc_count += 1
-                if doc_count % 1000 == 0:
-                    print(f"--> processed {doc_count} documents")
-               
+            for chunk in chunks:
+                chunk_bytes = list(chunk.encode("utf-8"))
+                if chunk_bytes:
+                    all_chunks.append(chunk_bytes)
+                    total_bytes += len(chunk_bytes)
+            doc_count += 1
+            if doc_count % 1000 == 0:
+                print(f"--> processed {doc_count} documents")
 
         print(f"--> processed {doc_count} documents in total")
-        print(f"--> found {len(all_ids)} total bytes")
+        print(f"--> found {total_bytes} total bytes")
         print(f"Learning(num_merges={num_merges})...")
 
         #train the tokenizer by learning merges, most frequent pairs are merged first
@@ -72,6 +71,13 @@ class BPETokenizer:
             
             new_id = 256 + i
             tokenizer.merges.append(best_pair)
+            tokenizer.vocab[new_id] = tokenizer.vocab[best_pair[0]] + tokenizer.vocab[best_pair[1]]
+
+            for idx, chunk in enumerate(all_chunks):
+                new_chunk = []
+                j = 0
+                while j < len(chunk):
+                    if j < len(chunk) - 1 and chunk[j] == best_pair[0] and chunk[j + 1] == best_pair[1]:
 
             
             
