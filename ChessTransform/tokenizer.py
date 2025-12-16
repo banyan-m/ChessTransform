@@ -68,6 +68,12 @@ class BPETokenizer:
 
             #find the most frequent pair of bytes to merge
             best_pair = max(pair_counts, key=pair_counts.get)
+            best_count = pair_counts[best_pair]
+            
+            new_id = 256 + i
+            tokenizer.merges.append(best_pair)
+
+            
             
 
 
