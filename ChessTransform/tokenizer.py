@@ -82,7 +82,7 @@ class BPETokenizer:
                         j += 2
                     else:
                         new_chunk.append(chunk[j])
-                    j += 1
+                        j += 1
                 all_chunks[idx] = new_chunk
             if (i + 1) % 100 == 0:
                 total_tokens = sum(len(c) for c in all_chunks)
@@ -92,12 +92,11 @@ class BPETokenizer:
         return tokenizer
 
     def encode(self, text):
-
+        """Encode text to list of token ids."""
         all_ids = []
 
         chunks = self._pretokenize(text)
         for chunk in chunks:
-
             ids = list(chunk.encode("utf-8"))
 
             for merge_idx, pair in enumerate(self.merges):
