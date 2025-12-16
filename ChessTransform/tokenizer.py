@@ -1,5 +1,6 @@
 import json 
 import os
+import regex
 
 
 
@@ -31,7 +32,20 @@ class BPETokenizer:
                 text_bytes = text.encode("utf-8")
                 all_ids.extend(list(text_bytes))
                 doc_count += 1
+                if doc_count % 1000 == 0:
+                    print(f"--> processed {doc_count} documents")
 
+        print(f"--> processed {doc_count} documents in total")
+        print(f"--> found {len(all_ids)} total bytes")
+        print(f"Learning(num_merges={num_merges})...")
+
+        for _ in range(num_merges):
+
+            pair_counts = {}
+
+
+
+            
                 
 
         
